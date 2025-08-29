@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Travel Options - Travel Booking{% endblock %}
+
+{% block content %}
+<h2>Available Travel Options</h2>
+<form method="get" class="form-inline mb-4">
+    <div class="form-group mr-2">
+        <input type="text" class="form-control" name="type" placeholder="Type (Flight, Train, Bus)">
+    </div>
+    <div class="form-group mr-2">
+        <input type="text" class="form-control" name="source" placeholder="Source">
+    </div>
+    <div class="form-group mr-2">
+        <input type="text" class="form-control" name="destination" placeholder="Destination">
+    </div>
+    <button type="submit" class="btn btn-primary">Search</button>
+</form>
+
+{% if travel_options %}
+    <ul class="list-group">
+        {% for option in travel_options %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <h5>{{ option.travel_type }} from {{ option.source }} to {{ option.destination }}</h5>
+                <p>Date: {{ option.date_time|date:"F d, Y" }} at {{ option.date_time|time:"H:i" }}</p>
+                <p>Price: ${{ option.price }} | Available Seats: {{ option.available_seats }}</p>
+            </div>
+            {% if option.available_seats > 0 %}
+                <a href="{% url 'book_travel' option.id %}" class="btn btn-success">Book Now</a>
+            {% else %}
+                <span class="badge badge-danger badge-pill">Sold Out</span>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="alert alert-info" role="alert">
+        No travel options found.
+    </div>
+{% endif %}
+{% endblock %}

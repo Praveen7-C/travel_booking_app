@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Profile - Travel Booking{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card mb-4">
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <div class="ml-3">
+                        <h2 class="card-title mb-0">Hello, {{ user.username }}!</h2>
+                        <p class="text-muted">Manage your profile and view your travel history.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Personal Information</h5>
+            </div>
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group row">
+                        <label for="username" class="col-sm-3 col-form-label">Username</label>
+                        <div class="col-sm-9">
+                            <input type="text" readonly class="form-control-plaintext" id="username" value="{{ user.username }}">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row">
+                        <label for="email" class="col-sm-3 col-form-label">Email</label>
+                        <div class="col-sm-9">
+                            <input type="email" readonly class="form-control-plaintext" id="email" value="{{ user.email }}">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row">
+                        <label for="phone_number" class="col-sm-3 col-form-label">Phone Number</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" id="phone_number" name="phone_number" value="{{ user_profile.phone_number|default_if_none:'' }}">
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="form-group row">
+                        <label for="address" class="col-sm-3 col-form-label">Address</label>
+                        <div class="col-sm-9">
+                            <textarea class="form-control" id="address" name="address" rows="3">{{ user_profile.address|default_if_none:'' }}</textarea>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-lg-4">
+        <div class="card mb-4">
+            <div class="card-header">
+                <h5 class="mb-0">Account Actions</h5>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'my_bookings' %}" class="btn btn-info btn-block mb-2">View My Bookings</a>
+                <a href="{% url 'travel_options' %}" class="btn btn-success btn-block mb-2">Find a New Trip</a>
+                <a href="{% url 'logout' %}" class="btn btn-danger btn-block">Log Out</a>
+            </div>
+        </div>
+        
+        <div class="card">
+            <div class="card-header">
+                <h5 class="mb-0">Recent Activity</h5>
+            </div>
+            <div class="card-body">
+                {% if recent_bookings %}
+                    <ul class="list-unstyled">
+                        {% for booking in recent_bookings %}
+                            <li>
+                                <p class="mb-1"><strong>Trip to {{ booking.travel_option.destination }}</strong></p>
+                                <small class="text-muted">{{ booking.booking_date|date:"F d, Y" }}</small>
+                            </li>
+                            <hr class="my-2">
+                        {% endfor %}
+                    </ul>
+                {% else %}
+                    <p class="text-muted">You have no recent activity.</p>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

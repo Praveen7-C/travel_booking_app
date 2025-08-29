@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Bookings - Travel Booking{% endblock %}
+
+{% block content %}
+<h2>My Bookings</h2>
+{% if bookings %}
+    <ul class="list-group">
+        {% for booking in bookings %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
+                <h5>Booking ID: {{ booking.booking_id }}</h5>
+                <p><strong>Travel Option:</strong> {{ booking.travel_option.travel_type }} from {{ booking.travel_option.source }} to {{ booking.travel_option.destination }}</p>
+                <p><strong>Date & Time:</strong> {{ booking.travel_option.date_time }}</p>
+                <p><strong>Seats Booked:</strong> {{ booking.number_of_seats }}</p>
+                <p><strong>Total Price:</strong> ${{ booking.total_price }}</p>
+                <p><strong>Status:</strong> <span class="badge badge-{{ booking.status|lower }}">{{ booking.status }}</span></p>
+            </div>
+            {% if booking.status == 'Confirmed' %}
+                <a href="{% url 'cancel_booking' booking.id %}" class="btn btn-danger btn-sm">Cancel Booking</a>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+{% else %}
+    <div class="alert alert-info" role="alert">
+        You have no bookings yet.
+    </div>
+{% endif %}
+{% endblock %}

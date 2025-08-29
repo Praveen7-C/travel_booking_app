@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Home - Travel Booking{% endblock %}
+
+{% block content %}
+<div class="jumbotron text-center">
+    <h1 class="display-4">Welcome to Travel Booking!</h1>
+    <p class="lead">Your one-stop solution for booking flights, trains, and buses.</p>
+    <hr class="my-4">
+    <p>Explore our available travel options and book your journey now.</p>
+    <a class="btn btn-primary btn-lg" href="{% url 'travel_options' %}" role="button">View Options</a>
+</div>
+{% endblock %}

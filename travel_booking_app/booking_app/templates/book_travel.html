@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Book Travel{% endblock %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3>Book Travel: {{ travel_option.travel_type }}</h3>
+            </div>
+            <div class="card-body">
+                <p><strong>Travel ID:</strong> {{ travel_option.travel_id }}</p>
+                <p><strong>Route:</strong> {{ travel_option.source }} to {{ travel_option.destination }}</p>
+                <p><strong>Date & Time:</strong> {{ travel_option.date_time }}</p>
+                <p><strong>Price per seat:</strong> ${{ travel_option.price }}</p>
+                <p><strong>Available Seats:</strong> {{ travel_option.available_seats }}</p>
+                
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="seats">Number of Seats</label>
+                        <input type="number" class="form-control" id="seats" name="seats" min="1" max="{{ travel_option.available_seats }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Confirm Booking</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
