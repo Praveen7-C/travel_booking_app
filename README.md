@@ -177,12 +177,6 @@ Contributions are welcome!
 
 ---
 
-## License
-
-This project is licensed under the **MIT License**.
-
----
-
 ## Acknowledgments
 
 Special thanks to the following technologies and resources:
@@ -190,3 +184,13 @@ Special thanks to the following technologies and resources:
 * **Django** – Backend framework
 * **SQLite/MySQL** – Database management
 * **Bootstrap** – Frontend styling and responsive design
+
+---
+
+## License
+
+This project is licensed under the **MIT License**.
+
+
+
+
